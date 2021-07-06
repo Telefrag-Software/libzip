@@ -147,7 +147,7 @@ endif()
 
 if(HAVE_LIBZSTD)
   target_sources(zip PRIVATE zip_algorithm_zstd.c)
-  target_link_libraries(zip PRIVATE Zstd::Zstd)
+  target_link_libraries(zip PRIVATE ${ZSTD_LIBRARY})
 endif()
 
 if(HAVE_COMMONCRYPTO)
@@ -174,14 +174,13 @@ if(SHARED_LIB_VERSIONNING)
   set_target_properties(zip PROPERTIES VERSION 5.5 SOVERSION 5)
 endif()
 
-target_link_libraries(zip PRIVATE ZLIB::ZLIB)
+target_link_libraries(zip PRIVATE ${ZLIB_LIBRARY})
 target_include_directories(zip
   PUBLIC
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>
   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
-
 if(LIBZIP_DO_INSTALL)
   install(TARGETS zip
     EXPORT ${PROJECT_NAME}-targets
